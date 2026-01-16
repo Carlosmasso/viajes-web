@@ -9,7 +9,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <button 
           onClick={() => navigate('/')}
-          className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+          className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
         >
           <div className="p-2 bg-white/10 backdrop-blur-md rounded-xl border border-white/20">
             <Globe className="w-8 h-8 text-white" />
