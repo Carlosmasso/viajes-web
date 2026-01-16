@@ -1,9 +1,14 @@
+import { Routes, Route } from 'react-router-dom';
+import { TravelLanding } from "@/components/TravelLanding";
+import { DestinationPage } from "@/pages/DestinationPage";
+
 export function App() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="font-medium">Hello World</div>
-    </div>
-  )
+    <Routes>
+      <Route path="/" element={<TravelLanding />} />
+      <Route path="/destino/:id" element={<DestinationPage />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
