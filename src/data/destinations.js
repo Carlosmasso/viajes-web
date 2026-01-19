@@ -78,7 +78,11 @@ export const destinations = [
       'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=1920&q=90',
       'https://images.unsplash.com/photo-1562883676-8c7feb83f09b?w=1920&q=90',
       'https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?w=1920&q=90',
-      'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=1920&q=90'
+      'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=1920&q=90',
+      'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1920&q=90',
+      'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=1920&q=90',
+      'https://images.unsplash.com/photo-1579282240050-352db0a14c21?w=1920&q=90',
+      'https://images.unsplash.com/photo-1464790719320-516ecd75af6c?w=1920&q=90'
     ],
     highlights: ['Sagrada Familia', 'Park Güell', 'Las Ramblas', 'Casa Batlló'],
     bestTime: 'Mayo - Junio, Septiembre - Octubre',
@@ -95,7 +99,11 @@ export const destinations = [
       'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1920&q=90',
       'https://images.unsplash.com/photo-1518684079-3c830dcef090?w=1920&q=90',
       'https://images.unsplash.com/photo-1582672060674-bc2bd808a8b5?w=1920&q=90',
-      'https://images.unsplash.com/photo-1546412414-e1885259563a?w=1920&q=90'
+      'https://images.unsplash.com/photo-1546412414-e1885259563a?w=1920&q=90',
+      'https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=1920&q=90',
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=90',
+      'https://images.unsplash.com/photo-1589330694653-e0b8b5f8b9e5?w=1920&q=90',
+      'https://images.unsplash.com/photo-1570454228927-4a86bd4b8c39?w=1920&q=90'
     ],
     highlights: ['Burj Khalifa', 'Palm Jumeirah', 'Dubai Mall', 'Desert Safari'],
     bestTime: 'Noviembre - Marzo',
@@ -112,7 +120,11 @@ export const destinations = [
       'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1920&q=90',
       'https://images.unsplash.com/photo-1523482580671-4e41ead36c40?w=1920&q=90',
       'https://images.unsplash.com/photo-1549180030-48bf079fb38a?w=1920&q=90',
-      'https://images.unsplash.com/photo-1624138784614-87fd1b6528f8?w=1920&q=90'
+      'https://images.unsplash.com/photo-1624138784614-87fd1b6528f8?w=1920&q=90',
+      'https://images.unsplash.com/photo-1528072164453-f4e8ef0d475a?w=1920&q=90',
+      'https://images.unsplash.com/photo-1578262825743-a4ff06d0b0fc?w=1920&q=90',
+      'https://images.unsplash.com/photo-1595435742656-5272d0d68d71?w=1920&q=90',
+      'https://images.unsplash.com/photo-1519145198441-c8e6a8e18e06?w=1920&q=90'
     ],
     highlights: ['Ópera de Sídney', 'Harbour Bridge', 'Bondi Beach', 'The Rocks'],
     bestTime: 'Septiembre - Noviembre, Marzo - Mayo',
@@ -129,7 +141,11 @@ export const destinations = [
       'https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=1920&q=90',
       'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=1920&q=90',
       'https://images.unsplash.com/photo-1583338283371-c6f5d5630e3e?w=1920&q=90',
-      'https://images.unsplash.com/photo-1531968455001-5c5272a41129?w=1920&q=90'
+      'https://images.unsplash.com/photo-1531968455001-5c5272a41129?w=1920&q=90',
+      'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=1920&q=90',
+      'https://images.unsplash.com/photo-1567449303078-e8b19e1f1f70?w=1920&q=90',
+      'https://images.unsplash.com/photo-1613665813446-82a78c468a1d?w=1920&q=90',
+      'https://images.unsplash.com/photo-1599493758267-c6c884c7071f?w=1920&q=90'
     ],
     highlights: ['Ruinas Incas', 'Huayna Picchu', 'Valle Sagrado', 'Cusco'],
     bestTime: 'Abril - Octubre',
