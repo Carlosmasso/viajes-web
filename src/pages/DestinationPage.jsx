@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Gallery } from "@/components/Gallery";
 
 export function DestinationPage() {
   const { id } = useParams();
@@ -121,6 +122,9 @@ export function DestinationPage() {
             </div>
           </div>
         </div>
+
+        {/* Gallery Section */}
+        <Gallery images={destination.images} name={destination.name} />
 
         {/* Tabs */}
         <Tabs defaultValue="info">
