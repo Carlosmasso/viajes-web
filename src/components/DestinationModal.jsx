@@ -56,7 +56,7 @@ export function DestinationModal({ destination, onClose }) {
                   key={index}
                   className="flex items-center gap-2 px-3 py-2 bg-accent/20 rounded-lg text-accent-foreground"
                 >
-                  <div className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+                  <div className="w-1.5 h-1.5 bg-accent-foreground rounded-full" />
                   <span className="text-sm font-medium">{highlight}</span>
                 </div>
               ))}
@@ -89,13 +89,13 @@ export function DestinationModal({ destination, onClose }) {
           <div className="flex gap-3">
             <button 
               onClick={handleViewMore}
-              className="flex-1 py-3 bg-card border-2 border-primary text-primary font-semibold rounded-xl hover:bg-accent transition-all shadow-lg"
+              className="flex-1 py-3 bg-card border-2 border-primary text-primary font-semibold rounded-xl transition-all shadow-lg hover:bg-primary/20"
             >
               Ver más detalles
             </button>
-            <button className="flex-1 py-3 bg-primary text-primary-foreground font-semibold rounded-xl hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl">
+            {/* <button className="flex-1 py-3 bg-primary text-primary-foreground font-semibold rounded-xl transition-all shadow-lg hover:bg-primary/90">
               Reservar ahora
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

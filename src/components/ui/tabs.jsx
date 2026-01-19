@@ -35,7 +35,7 @@ export function TabsTrigger({ value, children, className = "" }) {
       className={`px-6 py-3 font-medium text-md transition-colors border-b-2 ${
         isActive
           ? 'border-primary text-primary'
-          : 'border-transparent text-secondary hover:text-primary'
+          : 'border-transparent text-foreground hover:text-primary'
       } ${className}`}
     >
       {children}
