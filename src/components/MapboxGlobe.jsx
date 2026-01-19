@@ -1,23 +1,13 @@
 import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import Globe from 'globe.gl';
-import type { Destination } from '@/types/destination';
 
-interface MapboxGlobeProps {
-  destinations: Destination[];
-  onDestinationClick: (destination: Destination) => void;
-}
-
-export interface GlobeRef {
-  flyToDestination: (destination: Destination) => void;
-}
-
-export const MapboxGlobe = forwardRef<GlobeRef, MapboxGlobeProps>(({ destinations, onDestinationClick }, ref) => {
-  const globeEl = useRef<HTMLDivElement>(null);
-  const globeInstance = useRef<any>(null);
+export const MapboxGlobe = forwardRef(({ destinations, onDestinationClick }, ref) => {
+  const globeEl = useRef(null);
+  const globeInstance = useRef(null);
 
   // Expose flyToDestination method to parent
   useImperativeHandle(ref, () => ({
-    flyToDestination: (destination: Destination) => {
+    flyToDestination: (destination) => {
       if (globeInstance.current) {
         globeInstance.current.pointOfView(
           {
@@ -64,13 +54,13 @@ export const MapboxGlobe = forwardRef<GlobeRef, MapboxGlobeProps>(({ destination
       .pointAltitude(0.01)
       .pointRadius('size')
       .pointColor('color')
-      .pointLabel((d: any) => `
+      .pointLabel((d) => `
         <div style="background: white; padding: 8px 12px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-          <div style="font-weight: bold; font-size: 14px; margin-bottom: 4px;">${d.destination.name}</div>
+          <div style="color: black; font-weight: bold; font-size: 14px; margin-bottom: 4px;">${d.destination.name}</div>
           <div style="color: #666; font-size: 12px;">${d.destination.country}</div>
         </div>
       `)
-      .onPointClick((point: any) => {
+      .onPointClick((point) => {
         const dest = point.destination;
         // Fly to destination
         globe.pointOfView(

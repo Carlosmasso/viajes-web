@@ -1,13 +1,7 @@
-import type { Destination } from '@/types/destination';
 import { X, MapPin, Calendar, DollarSign } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-interface DestinationModalProps {
-  destination: Destination | null;
-  onClose: () => void;
-}
-
-export function DestinationModal({ destination, onClose }: DestinationModalProps) {
+export function DestinationModal({ destination, onClose }) {
   const navigate = useNavigate();
 
   if (!destination) return null;

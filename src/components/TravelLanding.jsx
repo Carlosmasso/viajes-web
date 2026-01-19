@@ -1,16 +1,15 @@
 import { destinations } from '@/data/destinations';
-import type { Destination } from '@/types/destination';
 import { Plane } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { DestinationModal } from '@/components/DestinationModal';
-import { MapboxGlobe, type GlobeRef } from './MapboxGlobe';
+import { MapboxGlobe } from './MapboxGlobe';
 import { Header } from './Header';
 
 export function TravelLanding() {
-  const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null);
-  const globeRef = useRef<GlobeRef>(null);
+  const [selectedDestination, setSelectedDestination] = useState(null);
+  const globeRef = useRef(null);
 
-  const handleDestinationSelect = (destination: Destination) => {
+  const handleDestinationSelect = (destination) => {
     // Fly to destination first
     globeRef.current?.flyToDestination(destination);
     

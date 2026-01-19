@@ -1,6 +1,4 @@
-import type { Destination } from '@/types/destination';
-
-export const destinations: Destination[] = [
+export const destinations = [
   {
     id: 'paris',
     name: 'París',
