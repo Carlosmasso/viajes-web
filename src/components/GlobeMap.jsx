@@ -42,7 +42,7 @@ const GlobeMap = () => {
       // Ajustar zoom según el ancho de la pantalla
       const isMobile = window.innerWidth < 1024;
       const initialZoom = isMobile ? 1.2 : 2.5;
-      
+
       const map = new maplibregl.Map({
         container: mapContainer.current,
         style: {
@@ -187,9 +187,9 @@ const GlobeMap = () => {
   const handleFlyToDestino = (coords, nombre, id) => {
     const map = mapRef.current;
     if (!map) return;
-    
+
     setSelectedDestino(id);
-    
+
     const currentCenter = map.getCenter();
     const targetLat = coords[1];
     const zoomAdjustment = getZoomAdjustment(currentCenter.lat, targetLat);
@@ -214,6 +214,20 @@ const GlobeMap = () => {
     map.on("moveend", onMoveEnd);
   };
 
+  const renderDestinationButton = (dest, isSelected, onClick) => (
+    <button
+      key={dest.id}
+      onClick={onClick}
+      className={`flex items-center gap-3 p-3 backdrop-blur-lg rounded-xl transition-all group text-left border cursor-pointer bg-[#a61d2d]/90 hover:bg-[#a61d2d] border-[#a61d2d]/60 shadow-sm hover:shadow-md`}
+    >
+      <div className="flex-1 min-w-0">
+        <h3 className="font-medium truncate transition-colors text-white">
+          {dest.nombre}
+        </h3>
+      </div>
+    </button>
+  );
+
   return (
     <div
       style={{
@@ -228,11 +242,13 @@ const GlobeMap = () => {
         <div className="absolute inset-0 flex items-center justify-center bg-white/90 backdrop-blur-sm z-50 animate-in fade-in duration-300">
           <div className="text-center space-y-4">
             <div className="w-16 h-16 border-4 border-secondary/30 border-t-secondary rounded-full animate-spin mx-auto" />
-            <p className="text-sm text-muted-foreground font-medium">Cargando el mundo...</p>
+            <p className="text-sm text-muted-foreground font-medium">
+              Cargando el mundo...
+            </p>
           </div>
         </div>
       )}
-      
+
       <div
         ref={mapContainer}
         style={{
@@ -242,70 +258,31 @@ const GlobeMap = () => {
           height: "100%",
         }}
       />
-      
+
       {/* Destinos Sidebar - Desktop */}
       <div className="absolute right-6 top-24 bottom-6 w-64 hidden lg:flex flex-col gap-2 overflow-y-auto pointer-events-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent pr-2">
-        <div className="mb-2 px-3 py-2 bg-[#f4f1ea]/95 backdrop-blur-md rounded-xl border border-border/40 shadow-sm">
-          <h2 className="text-sm font-semibold text-foreground">Destinos Disponibles</h2>
-          <p className="text-xs text-muted-foreground">Haz clic para explorar</p>
+        <div className="mb-2 px-3 py-2 bg-[#a61d2d]/95 backdrop-blur-md rounded-xl border border-border/40 shadow-sm">
+          <h2 className="text-sm font-semibold text-white">
+            Destinos Disponibles
+          </h2>
+          <p className="text-xs text-white/90">Haz clic para explorar</p>
         </div>
-        {DESTINOS.map((dest) => (
-          <button
-            key={dest.id}
-            onClick={() => handleFlyToDestino(dest.coords, dest.nombre, dest.id)}
-            className={`flex items-center gap-3 p-3 backdrop-blur-lg rounded-xl transition-all group text-left border cursor-pointer hover:scale-[1.02] ${
-              selectedDestino === dest.id
-                ? 'bg-secondary/90 border-secondary shadow-lg'
-                : 'bg-[#f4f1ea]/90 hover:bg-[#f4f1ea] border-border/40 shadow-sm hover:shadow-md'
-            }`}
-          >
-            <div className="flex-1 min-w-0">
-              <h3 className={`font-medium truncate transition-colors ${
-                selectedDestino === dest.id
-                  ? 'text-secondary-foreground'
-                  : 'text-foreground'
-              }`}>
-                {dest.nombre}
-              </h3>
-            </div>
-            <svg 
-              width="16" 
-              height="16" 
-              viewBox="0 0 16 16" 
-              className={`flex-shrink-0 transition-transform group-hover:translate-x-1 ${
-                selectedDestino === dest.id ? 'text-secondary-foreground' : 'text-muted-foreground'
-              }`}
-              fill="none"
-            >
-              <path d="M6 12l4-4-4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-        ))}
+        {DESTINOS.map((dest) =>
+          renderDestinationButton(dest, selectedDestino === dest.id, () =>
+            handleFlyToDestino(dest.coords, dest.nombre, dest.id)
+          )
+        )}
       </div>
-      
+
       {/* Destinos Bottom Bar - Mobile */}
-      <div className="absolute bottom-6 left-6 right-6 lg:hidden flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-        {DESTINOS.map((dest) => (
-          <button
-            key={dest.id}
-            onClick={() => handleFlyToDestino(dest.coords, dest.nombre, dest.id)}
-            className={`flex-shrink-0 px-4 py-2 backdrop-blur-lg rounded-xl transition-all border ${
-              selectedDestino === dest.id
-                ? 'bg-secondary/90 border-secondary shadow-lg'
-                : 'bg-[#f4f1ea]/90 hover:bg-[#f4f1ea] border-border/40 shadow-sm hover:shadow-md'
-            }`}
-          >
-            <span className={`text-sm font-medium whitespace-nowrap ${
-              selectedDestino === dest.id
-                ? 'text-secondary-foreground'
-                : 'text-foreground'
-            }`}>
-              {dest.nombre}
-            </span>
-          </button>
-        ))}
+      <div className="absolute bottom-20 left-4 right-4 lg:hidden flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+        {DESTINOS.map((dest) =>
+          renderDestinationButton(dest, selectedDestino === dest.id, () =>
+            handleFlyToDestino(dest.coords, dest.nombre, dest.id)
+          )
+        )}
       </div>
-      
+
       {/* Button Pole/Equator */}
       <button
         onClick={handleFly}
