@@ -39,6 +39,10 @@ const GlobeMap = () => {
     }
 
     try {
+      // Ajustar zoom según el ancho de la pantalla
+      const isMobile = window.innerWidth < 1024;
+      const initialZoom = isMobile ? 1.2 : 2.5;
+      
       const map = new maplibregl.Map({
         container: mapContainer.current,
         style: {
@@ -83,7 +87,7 @@ const GlobeMap = () => {
           ],
         },
         center: [0, 0],
-        zoom: 2,
+        zoom: initialZoom,
         projection: "globe",
         antialias: true,
       });
