@@ -18,7 +18,34 @@ export function Gallery({ images, name }) {
         <h2 className="text-2xl font-semibold text-foreground">
           Galería de {name}
         </h2>
-        <div className="grid grid-cols-4 grid-rows-2 gap-1 h-[500px] rounded-2xl overflow-hidden">
+        
+        {/* Mobile: Carousel horizontal con scroll */}
+        <div className="md:hidden">
+          <div className="relative">
+            <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4">
+              {images.map((image, index) => (
+                <button
+                  key={index}
+                  onClick={() => openLightbox(index)}
+                  className="flex-shrink-0 w-[85vw] h-[300px] snap-center group relative overflow-hidden rounded-2xl focus:outline-none focus:ring-2 focus:ring-secondary/50"
+                >
+                  <img
+                    src={image}
+                    alt={`${name} ${index + 1}`}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-active:bg-black/20 transition-all duration-300" />
+                  <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full">
+                    <span className="text-white text-sm font-medium">{index + 1} / {images.length}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop: Custom grid layout */}
+        <div className="hidden md:grid grid-cols-4 grid-rows-2 gap-1 h-[500px] rounded-2xl overflow-hidden">
           {/* Primera imagen - mitad del espacio (2 cols x 2 rows) */}
           <button
             onClick={() => openLightbox(0)}
@@ -68,6 +95,11 @@ export function Gallery({ images, name }) {
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+            {images.length > 4 && (
+              <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                <span className="text-white text-3xl font-semibold">+{images.length - 4}</span>
+              </div>
+            )}
           </button>
         </div>
       </div>
