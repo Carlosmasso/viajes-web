@@ -1,12 +1,13 @@
-import { destinations } from "@/data/destinations";
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Globe from "react-globe.gl";
-import { useNavigate } from "react-router-dom";
+import { TextureLoader, ShaderMaterial, Vector2 } from "three";
 import * as solar from "solar-calculator";
-import { ShaderMaterial, TextureLoader, Vector2 } from "three";
+import { destinations } from "@/data/destinations";
+import { useNavigate } from "react-router-dom";
 
-const VELOCITY = 0.25;
+const VELOCITY = 1; // minutos por frame
 
+// Shader personalizado: mezcla texturas de día y noche
 const dayNightShader = {
   vertexShader: `
     varying vec3 vNormal;
@@ -30,10 +31,10 @@ const dayNightShader = {
       return a * PI / 180.0;
     }
 
-    vec3 Polar2Cartesian(in vec2 c) {
+    vec3 Polar2Cartesian(in vec2 c) { // [lng, lat]
       float theta = toRad(90.0 - c.x);
       float phi = toRad(90.0 - c.y);
-      return vec3(
+      return vec3( // x,y,z
         sin(phi) * cos(theta),
         cos(phi),
         sin(phi) * sin(theta)
@@ -63,6 +64,7 @@ const dayNightShader = {
   `,
 };
 
+// Función para calcular posición del sol
 const sunPosAt = (dt) => {
   const day = new Date(+dt).setUTCHours(0, 0, 0, 0);
   const t = solar.century(dt);
@@ -73,9 +75,8 @@ const sunPosAt = (dt) => {
 const DayNightGlobe = () => {
   const [dt, setDt] = useState(+new Date());
   const [globeMaterial, setGlobeMaterial] = useState(null);
-  const [selectedDestino, setSelectedDestino] = useState(null);
-  const globeRef = useRef(null);
   const navigate = useNavigate();
+  const globeRef = useRef(null);
 
   // Normalizamos destinos a estructura para labels
   const DESTINOS = destinations.map((d) => {
@@ -88,20 +89,25 @@ const DayNightGlobe = () => {
     };
   });
 
-  // Animación del tiempo
+  // Animar el tiempo (cambia dt)
   useEffect(() => {
     let animId;
-    const iterateTime = () => {
+
+    const animateTime = () => {
       setDt((prev) => prev + VELOCITY * 60 * 1000);
-      animId = requestAnimationFrame(iterateTime);
+      animId = requestAnimationFrame(animateTime);
     };
-    iterateTime();
-    return () => animId && cancelAnimationFrame(animId);
+
+    animateTime();
+
+    return () => {
+      if (animId) cancelAnimationFrame(animId);
+    };
   }, []);
 
-  // Cargar texturas y material
+  // Cargar texturas y crear ShaderMaterial
   useEffect(() => {
-    let isCancelled = false;
+    let cancelled = false;
 
     Promise.all([
       new TextureLoader().loadAsync(
@@ -111,7 +117,7 @@ const DayNightGlobe = () => {
         "//cdn.jsdelivr.net/npm/three-globe/example/img/earth-night.jpg",
       ),
     ]).then(([dayTexture, nightTexture]) => {
-      if (isCancelled) return;
+      if (cancelled) return;
 
       const material = new ShaderMaterial({
         uniforms: {
@@ -128,23 +134,29 @@ const DayNightGlobe = () => {
     });
 
     return () => {
-      isCancelled = true;
+      cancelled = true;
     };
   }, []);
 
-  // Actualizar posición del sol
+  // Actualizar posición del sol en el shader cuando cambia dt
   useEffect(() => {
     if (!globeMaterial) return;
     globeMaterial.uniforms.sunPosition.value.set(...sunPosAt(dt));
   }, [dt, globeMaterial]);
 
-  // const handleZoom = useCallback(
-  //   ({ lng, lat }) => {
-  //     if (!globeMaterial) return;
-  //     globeMaterial.uniforms.globeRotation.value.set(lng, lat);
-  //   },
-  //   [globeMaterial],
-  // );
+  useEffect(() => {
+    if (globeRef.current) {
+      const isMobile = window.innerWidth <= 768; // Determinar si es un dispositivo móvil
+      const altitude = isMobile ? 3 : 1.75; // Altitude 4 para móvil, 2 para desktop
+      globeRef.current.pointOfView({ altitude });
+    }
+  }, []);
+
+  // Actualizar rotación del globo en el shader cuando el usuario hace zoom/drag
+  const handleZoom = ({ lng, lat }) => {
+    if (!globeMaterial) return;
+    globeMaterial.uniforms.globeRotation.value.set(lng, lat);
+  };
 
   const renderDestinationButton = (dest, onClick) => (
     <button
@@ -162,7 +174,6 @@ const DayNightGlobe = () => {
 
   const memoizedHandleFlyToDestino = useCallback(
     (coords, nombre, id) => {
-      setSelectedDestino(id);
       if (globeRef.current) {
         globeRef.current.pointOfView(
           { lat: coords[1], lng: coords[0], altitude: 1.5 },
@@ -177,25 +188,20 @@ const DayNightGlobe = () => {
     [navigate],
   );
 
-  useEffect(() => {
-    if (globeRef.current) {
-      const isMobile = window.innerWidth <= 768; // Determinar si es un dispositivo móvil
-      const altitude = isMobile ? 4 : 2; // Altitude 4 para móvil, 2 para desktop
-      globeRef.current.pointOfView({ altitude });
-    }
-  }, []);
-
   return (
     <div
       style={{
-        position: "relative",
+        margin: 0,
         width: "100%",
         height: "100vh",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
       <Globe
         ref={globeRef}
         globeMaterial={globeMaterial || undefined}
+        onZoom={handleZoom}
         backgroundColor="#e8ebed"
       />
 
@@ -210,7 +216,7 @@ const DayNightGlobe = () => {
         {DESTINOS.map((dest) =>
           renderDestinationButton(dest, () =>
             memoizedHandleFlyToDestino(
-              [dest.lng, dest.lat],
+              [dest.lng, dest.lat], 
               dest.nombre,
               dest.id,
             ),
@@ -222,7 +228,7 @@ const DayNightGlobe = () => {
       <div className="absolute bottom-20 left-4 right-4 lg:hidden flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
         {DESTINOS.map((dest) =>
           renderDestinationButton(dest, () =>
-            handleFlyToDestino(dest.coords, dest.nombre, dest.id),
+            memoizedHandleFlyToDestino([dest.lng, dest.lat], dest.nombre, dest.id),
           ),
         )}
       </div>
