@@ -59,6 +59,9 @@ importers:
       shadcn:
         specifier: ^3.7.0
         version: 3.7.0(@types/node@24.10.9)(hono@4.11.4)(typescript@5.9.3)
+      solar-calculator:
+        specifier: ^0.3.0
+        version: 0.3.0
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.4.0
@@ -3769,6 +3772,9 @@ packages:
 
   skmeans@0.9.7:
     resolution: {integrity: sha512-hNj1/oZ7ygsfmPZ7ZfN5MUBRoGg1gtpnImuJBgLO0ljQ67DtJuiQaiYdS4lUA6s0KCwnPhGivtC/WRwIZLkHyg==}
+
+  solar-calculator@0.3.0:
+    resolution: {integrity: sha512-FCtJPJ8ElgSBjeLnbmFcWGhhaS0QmxtbJ4x6PLlz5X8crOJjtfIWci/YxoVtQNyCvs/g1RgGBgr06p4jrdOHBw==}
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -8773,6 +8779,8 @@ snapshots:
   sisteransi@1.0.5: {}
 
   skmeans@0.9.7: {}
+
+  solar-calculator@0.3.0: {}
 
   source-map-js@1.2.1: {}
 
