@@ -221,7 +221,7 @@ const DayNightGlobe = () => {
         <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 pointer-events-auto">
           <div className="bg-white rounded-3xl p-8 max-w-md mx-4 shadow-2xl transform animate-in fade-in zoom-in duration-500">
             <div className="text-center">
-              <div className="text-6xl mb-4">🎉</div>
+              <div className="text-6xl mb-4">✈️</div>
               <h1 className="text-3xl font-bold text-gray-800 mb-3">
                 ¡Bienvenido a bordo!
               </h1>
