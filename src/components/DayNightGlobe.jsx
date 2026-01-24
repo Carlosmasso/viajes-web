@@ -75,6 +75,8 @@ const sunPosAt = (dt) => {
 const DayNightGlobe = () => {
   const [dt, setDt] = useState(+new Date());
   const [globeMaterial, setGlobeMaterial] = useState(null);
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [showDestinations, setShowDestinations] = useState(false);
   const navigate = useNavigate();
   const globeRef = useRef(null);
 
@@ -158,22 +160,31 @@ const DayNightGlobe = () => {
     globeMaterial.uniforms.globeRotation.value.set(lng, lat);
   };
 
-  const renderDestinationButton = (dest, onClick) => (
-    <button
+  const renderDestinationCard = (dest) => (
+    <div
       key={dest.id}
-      onClick={onClick}
-      className="flex items-center gap-3 p-3 backdrop-blur-lg rounded-xl transition-all group text-left border cursor-pointer bg-[#a61d2d]/90 hover:bg-[#a61d2d] border-[#a61d2d]/60 shadow-sm hover:shadow-md"
+      onClick={() =>
+        memoizedHandleFlyToDestino([dest.lng, dest.lat], dest.nombre, dest.id)
+      }
+      className="group cursor-pointer bg-white backdrop-blur-md rounded-xl px-4 py-3 hover:bg-[#a61d2d] transition-all duration-300 border border-gray-200 hover:border-[#a61d2d]"
     >
-      <div className="flex-1 min-w-0">
-        <h3 className="font-medium truncate transition-colors text-white">
+      <div className="flex items-center justify-between">
+        <h3 className="font-semibold text-gray-800 group-hover:text-white transition-colors">
           {dest.nombre}
         </h3>
+        <span className="text-gray-400 group-hover:text-white text-sm transition-colors">
+          →
+        </span>
       </div>
-    </button>
+    </div>
   );
 
   const memoizedHandleFlyToDestino = useCallback(
     (coords, nombre, id) => {
+      // Cerrar todos los modales
+      setShowWelcome(false);
+      setShowDestinations(false);
+
       if (globeRef.current) {
         globeRef.current.pointOfView(
           { lat: coords[1], lng: coords[0], altitude: 1.5 },
@@ -205,33 +216,49 @@ const DayNightGlobe = () => {
         backgroundColor="#e8ebed"
       />
 
-      {/* Destinos Sidebar - Desktop */}
-      <div className="absolute right-6 top-24 bottom-6 w-64 hidden lg:flex flex-col gap-2 overflow-y-auto pointer-events-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent pr-2">
-        <div className="mb-2 px-3 py-2 bg-[#a61d2d]/95 backdrop-blur-md rounded-xl border border-border/40 shadow-sm">
-          <h2 className="text-sm font-semibold text-white">
-            Destinos Disponibles
-          </h2>
-          <p className="text-xs text-white/90">Haz clic para explorar</p>
+      {/* Welcome Modal */}
+      {showWelcome && (
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 pointer-events-auto">
+          <div className="bg-white rounded-3xl p-8 max-w-md mx-4 shadow-2xl transform animate-in fade-in zoom-in duration-500">
+            <div className="text-center">
+              <div className="text-6xl mb-4">🎉</div>
+              <h1 className="text-3xl font-bold text-gray-800 mb-3">
+                ¡Bienvenido a bordo!
+              </h1>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Estás a punto de descubrir los destinos más increíbles del
+                mundo. Haz clic en cualquier lugar del globo y comienza tu
+                aventura.
+              </p>
+              <button
+                onClick={() => {
+                  setShowWelcome(false);
+                  setShowDestinations(true);
+                }}
+                className="bg-[#a61d2d] hover:bg-[#8e1725] text-white font-semibold px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+              >
+                Explorar destinos
+              </button>
+            </div>
+          </div>
         </div>
-        {DESTINOS.map((dest) =>
-          renderDestinationButton(dest, () =>
-            memoizedHandleFlyToDestino(
-              [dest.lng, dest.lat], 
-              dest.nombre,
-              dest.id,
-            ),
-          ),
-        )}
-      </div>
+      )}
 
-      {/* Destinos Bottom Bar - Mobile */}
-      <div className="absolute bottom-20 left-4 right-4 lg:hidden flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-        {DESTINOS.map((dest) =>
-          renderDestinationButton(dest, () =>
-            memoizedHandleFlyToDestino([dest.lng, dest.lat], dest.nombre, dest.id),
-          ),
-        )}
-      </div>
+      {/* Destinos Center Overlay */}
+      {showDestinations && (
+        <div className="absolute inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-40 pointer-events-auto">
+          <div className="bg-white/98 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-gray-200 pointer-events-auto max-w-3xl w-full mx-4">
+            <div className="flex items-center justify-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">
+                Selecciona tu destino
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent pr-2">
+              {DESTINOS.map((dest) => renderDestinationCard(dest))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
