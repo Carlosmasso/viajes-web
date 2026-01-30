@@ -148,6 +148,8 @@ const DayNightGlobe = () => {
 
   useEffect(() => {
     if (globeRef.current) {
+      const controls = globeRef.current.controls();
+      controls.enableZoom = false;
       const isMobile = window.innerWidth <= 768; // Determinar si es un dispositivo móvil
       const altitude = isMobile ? 6 : 1.75; // Altitude 4 para móvil, 2 para desktop
       globeRef.current.pointOfView({ altitude });
