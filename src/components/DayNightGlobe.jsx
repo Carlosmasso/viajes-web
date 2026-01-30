@@ -75,7 +75,6 @@ const sunPosAt = (dt) => {
 const DayNightGlobe = () => {
   const [dt, setDt] = useState(+new Date());
   const [globeMaterial, setGlobeMaterial] = useState(null);
-  const [showWelcome, setShowWelcome] = useState(true);
   const [showDestinations, setShowDestinations] = useState(false);
   const navigate = useNavigate();
   const globeRef = useRef(null);
@@ -84,6 +83,7 @@ const DayNightGlobe = () => {
   const DESTINOS = destinations.map((d) => {
     const coords = d.coordinates || [d.lon, d.lat]; // [lng, lat]
     return {
+      ...d,
       id: d.id,
       nombre: d.name,
       lat: coords[1],
@@ -149,7 +149,7 @@ const DayNightGlobe = () => {
   useEffect(() => {
     if (globeRef.current) {
       const isMobile = window.innerWidth <= 768; // Determinar si es un dispositivo móvil
-      const altitude = isMobile ? 3 : 1.75; // Altitude 4 para móvil, 2 para desktop
+      const altitude = isMobile ? 6 : 1.75; // Altitude 4 para móvil, 2 para desktop
       globeRef.current.pointOfView({ altitude });
     }
   }, []);
@@ -182,7 +182,6 @@ const DayNightGlobe = () => {
   const memoizedHandleFlyToDestino = useCallback(
     (coords, nombre, id) => {
       // Cerrar todos los modales
-      setShowWelcome(false);
       setShowDestinations(false);
 
       if (globeRef.current) {
@@ -198,6 +197,45 @@ const DayNightGlobe = () => {
     },
     [navigate],
   );
+
+  const renderNewDestination = (dest) => {
+    return (
+      <div
+        key={dest.id}
+        onClick={() =>
+          memoizedHandleFlyToDestino([dest.lng, dest.lat], dest.nombre, dest.id)
+        }
+        style={{
+          position: "relative",
+          padding: "12px",
+          backgroundColor: "black",
+          display: "grid",
+          placeContent: "center",
+          textAlign: "center",
+          minHeight: "200px",
+          borderRadius: "12px",
+          overflow: "hidden",
+          cursor: "pointer",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage: `url(${dest.bgImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity: 0.7,
+            zIndex: 0,
+          }}
+        />
+        <h3 className="font-semibold text-white" style={{ position: "relative", zIndex: 1 }}>{dest.nombre}</h3>
+      </div>
+    );
+  };
 
   return (
     <div
@@ -216,33 +254,35 @@ const DayNightGlobe = () => {
         backgroundColor="#e8ebed"
       />
 
-      {/* Welcome Modal */}
-      {showWelcome && (
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 pointer-events-auto">
-          <div className="bg-white rounded-3xl p-8 max-w-md mx-4 shadow-2xl transform animate-in fade-in zoom-in duration-500">
-            <div className="text-center">
-              <div className="text-6xl mb-4">✈️</div>
-              <h1 className="text-3xl font-bold text-gray-800 mb-3">
-                ¡Bienvenido a bordo!
-              </h1>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                Estás a punto de descubrir los destinos más increíbles del
-                mundo. Haz clic en cualquier lugar del globo y comienza tu
-                aventura.
-              </p>
-              <button
-                onClick={() => {
-                  setShowWelcome(false);
-                  setShowDestinations(true);
-                }}
-                className="bg-[#a61d2d] hover:bg-[#8e1725] text-white font-semibold px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
-              >
-                Explorar destinos
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <div
+        style={{
+          position: "absolute",
+          top: "10%",
+          left: 0,
+          right: 0,
+          gap: "20px",
+          display: "grid",
+          marginInline: "24px",
+          gridTemplateColumns: "repeat(3, 1fr)",
+        }}
+      >
+        {DESTINOS.slice(0, 3).map((dest) => renderNewDestination(dest))}
+      </div>
+
+      <div
+         style={{
+          position: "absolute",
+          bottom: "10%",
+          left: 0,
+          right: 0,
+          gap: "20px",
+          display: "grid",
+          marginInline: "24px",
+          gridTemplateColumns: "repeat(3, 1fr)",
+        }}
+      >
+        {DESTINOS.slice(3).map((dest) => renderNewDestination(dest))}
+      </div>
 
       {/* Destinos Center Overlay */}
       {showDestinations && (

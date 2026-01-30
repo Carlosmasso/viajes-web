@@ -1,3 +1,10 @@
+import dest1 from '../assets/destinations/dest1.jpg';
+import dest2 from '../assets/destinations/dest2.jpg';
+import dest3 from '../assets/destinations/dest3.jpg';
+import dest4 from '../assets/destinations/dest4.jpg';
+import dest5 from '../assets/destinations/dest5.jpg';
+import dest6 from '../assets/destinations/dest6.jpg';
+
 export const destinations = [
   {
     id: 'paris',
@@ -14,7 +21,8 @@ export const destinations = [
     ],
     highlights: ['Torre Eiffel', 'Museo del Louvre', 'Catedral de Notre-Dame', 'Arco del Triunfo'],
     bestTime: 'Abril - Junio, Septiembre - Octubre',
-    price: 'Desde €1,200'
+    price: 'Desde €1,200',
+    bgImage: dest1
   },
   {
     id: 'tokyo',
@@ -31,7 +39,8 @@ export const destinations = [
     ],
     highlights: ['Monte Fuji', 'Templo Senso-ji', 'Shibuya Crossing', 'Palacio Imperial'],
     bestTime: 'Marzo - Mayo, Septiembre - Noviembre',
-    price: 'Desde €1,800'
+    price: 'Desde €1,800',
+    bgImage: dest2
   },
   {
     id: 'new-york',
@@ -48,7 +57,8 @@ export const destinations = [
     ],
     highlights: ['Estatua de la Libertad', 'Central Park', 'Times Square', 'Empire State'],
     bestTime: 'Abril - Junio, Septiembre - Noviembre',
-    price: 'Desde €1,500'
+    price: 'Desde €1,500',
+    bgImage: dest3
   },
   {
     id: 'bali',
@@ -65,7 +75,8 @@ export const destinations = [
     ],
     highlights: ['Templo Tanah Lot', 'Ubud', 'Playas de Seminyak', 'Terrazas de Tegalalang'],
     bestTime: 'Mayo - Septiembre',
-    price: 'Desde €900'
+    price: 'Desde €900',
+    bgImage: dest4
   },
   {
     id: 'barcelona',
@@ -86,7 +97,8 @@ export const destinations = [
     ],
     highlights: ['Sagrada Familia', 'Park Güell', 'Las Ramblas', 'Casa Batlló'],
     bestTime: 'Mayo - Junio, Septiembre - Octubre',
-    price: 'Desde €800'
+    price: 'Desde €800',
+    bgImage: dest5
   },
   {
     id: 'dubai',
@@ -107,48 +119,7 @@ export const destinations = [
     ],
     highlights: ['Burj Khalifa', 'Palm Jumeirah', 'Dubai Mall', 'Desert Safari'],
     bestTime: 'Noviembre - Marzo',
-    price: 'Desde €1,600'
+    price: 'Desde €1,600',
+    bgImage: dest6
   },
-  // {
-  //   id: 'sydney',
-  //   name: 'Sídney',
-  //   country: 'Australia',
-  //   description: 'Ciudad costera icónica con playas espectaculares y vida urbana vibrante.',
-  //   coordinates: [151.2093, -33.8688],
-  //   image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1920&q=90',
-  //   images: [
-  //     'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1523482580671-4e41ead36c40?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1549180030-48bf079fb38a?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1624138784614-87fd1b6528f8?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1528072164453-f4e8ef0d475a?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1578262825743-a4ff06d0b0fc?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1595435742656-5272d0d68d71?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1519145198441-c8e6a8e18e06?w=1920&q=90'
-  //   ],
-  //   highlights: ['Ópera de Sídney', 'Harbour Bridge', 'Bondi Beach', 'The Rocks'],
-  //   bestTime: 'Septiembre - Noviembre, Marzo - Mayo',
-  //   price: 'Desde €2,200'
-  // },
-  // {
-  //   id: 'machu-picchu',
-  //   name: 'Machu Picchu',
-  //   country: 'Perú',
-  //   description: 'Ciudad inca ancestral en las montañas, maravilla del mundo.',
-  //   coordinates: [-72.5450, -13.1631],
-  //   image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=1920&q=90',
-  //   images: [
-  //     'https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1583338283371-c6f5d5630e3e?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1531968455001-5c5272a41129?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1567449303078-e8b19e1f1f70?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1613665813446-82a78c468a1d?w=1920&q=90',
-  //     'https://images.unsplash.com/photo-1599493758267-c6c884c7071f?w=1920&q=90'
-  //   ],
-  //   highlights: ['Ruinas Incas', 'Huayna Picchu', 'Valle Sagrado', 'Cusco'],
-  //   bestTime: 'Abril - Octubre',
-  //   price: 'Desde €1,300'
-  // }
 ];
